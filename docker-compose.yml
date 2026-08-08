@@ -1,0 +1,12 @@
+services:
+  chess:
+    build: .
+    image: chess-lld:latest
+    container_name: chess
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+    restart: unless-stopped
+    # games live in memory, so the container needs room for the bot's search tables
+    mem_limit: 1g

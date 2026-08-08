@@ -1,0 +1,18 @@
+# Render Blueprint. Point Render at this repo and it configures the service from here.
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: chess
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: singapore          # closest Render region to India
+    healthCheckPath: /api/chess/health
+    autoDeploy: true
+    envVars:
+      # free instances get 512 MB, so leave the JVM a little headroom
+      - key: JAVA_OPTS
+        value: -XX:MaxRAMPercentage=70
+      # a free instance is 0.1 CPU: give the bot more wall clock to reach a usable depth
+      - key: CHESS_BOT_TIME_SCALE
+        value: "3"
