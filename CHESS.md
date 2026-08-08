@@ -20,6 +20,20 @@ mvn package && java -jar target/low-level-design-1.0-SNAPSHOT.jar
 `PORT` overrides the port. Games live in memory, so a restart clears them and running more
 than one replica needs a shared store first.
 
+## Deploying to Render
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/7078shiv/low-level-design)
+
+`render.yaml` describes the service, so Render configures itself from the repo: Docker
+runtime, health check on `/api/chess/health`, and auto deploy on push to `main`.
+
+Two things to know about the free instance:
+
+- it sleeps after 15 minutes idle, so the first request after that takes roughly a minute
+- it is 0.1 CPU, and the search is CPU bound, so `CHESS_BOT_TIME_SCALE` is set to `3`.
+  That buys back the depth but makes the hard bot think for about ten seconds a move.
+  Lower it in the Render dashboard for quicker, weaker replies; no code change needed.
+
 ## Layout
 
 ```
