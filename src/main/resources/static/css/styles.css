@@ -541,9 +541,27 @@ button.link:hover { background: none; color: var(--text); }
 
 /* ---------------------------------------------------------------- narrower */
 
-@media (max-width: 780px) {
-    :root { --square: min(11vw, 60px); }
+@media (max-width: 900px) {
+    :root {
+        /* the eight squares, the rank gutter and the page padding all have to fit across:
+           sizing from a bare vw fraction overflows once the fixed padding stops being small */
+        --square: min(calc((100vw - 54px) / 8), 74px);
+    }
 
-    .layout { padding: 14px 26px 32px; gap: 20px; }
-    .panel { width: 100%; max-width: calc(var(--square) * 8); }
+    .topbar { padding: 16px 16px 4px; }
+    .layout { padding: 12px 14px 32px; gap: 16px; }
+    .board-area { padding: 0 0 16px 18px; }
+    .panel { width: 100%; max-width: none; }
+
+    /* a long row of captured pieces should wrap rather than push the strip wider */
+    .player-strip { flex-wrap: wrap; }
+    .move-list { max-height: 220px; }
+}
+
+@media (max-width: 420px) {
+    .topbar h1 { font-size: 19px; }
+    .subtitle { display: none; }
+    .dialog { min-width: 0; width: calc(100vw - 40px); }
+    .dialog.wide { min-width: 0; width: calc(100vw - 40px); }
+    .promo-choices button { width: 54px; height: 54px; font-size: 34px; }
 }

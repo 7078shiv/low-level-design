@@ -109,6 +109,11 @@ with a readable reason; unknown game ids answer `404`.
 legal destinations marked, last move and check highlighted, SAN move list, captured pieces
 and material count, promotion picker, undo, flip, resign and a shareable `?game=<id>` URL.
 
+The board sizes itself from the space actually available, so it fits from a 320px phone
+upwards; below 900px the side panel stacks under the board. Dragging uses HTML5 drag and
+drop, which touch screens do not fire, so on a phone you move by tapping the piece and then
+the destination.
+
 ## Fixes to the original LLD
 
 The rules code could not make a single legal move before this:
