@@ -5,3 +5,4 @@ public class Bus extends Vehical{
         super(VehicelType.BUS, licensePlateNo);
     }
 }
+

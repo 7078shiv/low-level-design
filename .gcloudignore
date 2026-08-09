@@ -1,0 +1,10 @@
+# Keep the build context small; Cloud Build only needs the sources and the Dockerfile.
+.git/
+.gitignore
+target/
+.idea/
+*.iml
+.mvn/
+docker-compose.yml
+render.yaml
+CHESS.md

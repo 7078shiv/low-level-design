@@ -20,6 +20,27 @@ mvn package && java -jar target/low-level-design-1.0-SNAPSHOT.jar
 `PORT` overrides the port. Games live in memory, so a restart clears them and running more
 than one replica needs a shared store first.
 
+## Deploying to Google Cloud Run
+
+```bash
+gcloud auth login
+gcloud projects list                       # pick one deliberately
+./deploy/cloudrun.sh <project-id>          # region defaults to asia-south1
+```
+
+The script enables the Cloud Run, Cloud Build and Artifact Registry APIs, builds the
+Dockerfile through Cloud Build and deploys, then prints the URL.
+
+`--max-instances 1` in that script is a correctness requirement, not a cost control. Games
+are held in memory, so if Cloud Run started a second instance your next move could land on
+one that has never seen your game and answer `404`. Lifting the cap means moving the game
+store out of memory first, into Redis or Firestore.
+
+Two smaller things: the service scales to zero, so the first request after an idle spell
+pays a JVM cold start of a few seconds — `--min-instances 1` removes that but bills for an
+always-warm instance. And with two full vCPUs the bot needs no time compensation, so
+`CHESS_BOT_TIME_SCALE` stays at `1` here, unlike Render's free tier.
+
 ## Deploying to Render
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/7078shiv/low-level-design)
